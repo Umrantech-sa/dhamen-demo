@@ -97,10 +97,23 @@ function memoryBackend(): Backend {
   };
 }
 
+/**
+ * Finds Upstash credentials. The Vercel Marketplace integration lets you choose a custom
+ * env var prefix (e.g. STORAGE_KV_REST_API_URL), so match on the suffix.
+ */
+function redisCredentials() {
+  const find = (suffixes: string[]) => {
+    for (const suffix of suffixes) {
+      const key = Object.keys(process.env).find((k) => k === suffix || k.endsWith(`_${suffix}`));
+      if (key && process.env[key]) return process.env[key];
+    }
+  };
+  return { url: find(["KV_REST_API_URL", "UPSTASH_REDIS_REST_URL"]), token: find(["KV_REST_API_TOKEN", "UPSTASH_REDIS_REST_TOKEN"]) };
+}
+
 function backend(): Backend {
   if (!g.__dhamenBackend) {
-    const url = process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL;
-    const token = process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN;
+    const { url, token } = redisCredentials();
     g.__dhamenBackend = url && token ? redisBackend(url, token) : process.env.VERCEL ? memoryBackend() : fileBackend();
   }
   return g.__dhamenBackend;

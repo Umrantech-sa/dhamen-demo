@@ -34,7 +34,7 @@ export function StatCard({
           </div>
         )}
       </div>
-      <div className="mt-1 text-xl font-semibold tracking-tight sm:text-2xl">{value}</div>
+      <div className="mt-1 text-lg font-semibold tracking-tight xl:text-xl 2xl:text-2xl">{value}</div>
       {sub && <div className="mt-1 text-xs text-muted-foreground">{sub}</div>}
     </div>
   );

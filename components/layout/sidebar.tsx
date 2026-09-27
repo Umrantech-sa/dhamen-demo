@@ -39,7 +39,7 @@ export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
         <div className="mb-1 flex items-center gap-1.5 font-semibold">
           <ShieldCheckIcon className="size-3.5" /> Dhamen Sandbox
         </div>
-        Integration Guide v1.5 · api-version 2. Data is stored locally in <span className="font-mono">data/db.json</span>.
+        Integration Guide v1.5 · api-version 2. Mock API with seeded data — reset it any time in Settings.
       </div>
     </nav>
   );
